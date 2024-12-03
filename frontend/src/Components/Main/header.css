@@ -1,0 +1,51 @@
+.Main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100%;
+}
+
+.main_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6%;
+    width: 60%;
+    height: 48%;
+}
+
+.right_side {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left_side {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.mapImage {
+    width: 70%;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titles-wrapper {
+    margin-bottom: 24px;
+}

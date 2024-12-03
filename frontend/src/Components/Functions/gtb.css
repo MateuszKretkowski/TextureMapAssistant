@@ -1,0 +1,81 @@
+
+
+.sides-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+.gtb_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+}
+
+.gtb_left_side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gtb_right_side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.gtb_image {
+    position: relative;
+    min-width: 50%;
+    max-width: 80%;
+    transition: all 300ms ease;
+}
+
+.gtb_image:hover {
+    filter: contrast(50%);
+}
+
+.gtb_image:hover .img_input {
+    color: red;
+}
+
+.img_input {
+    position: absolute;
+    top: 100%;
+    left: 25%;
+    z-index: 1;
+    transition: all 300ms ease;
+    border: none;
+    
+}
+
+
+.custom-file-input {
+    appearance: none; /* Usuwa domyślny styl przeglądarki */
+    padding: 8px 12px; /* Wewnętrzny odstęp */
+    font-family: Arial, sans-serif; /* Czcionka */
+    font-size: 16px; /* Rozmiar tekstu */
+    cursor: pointer; /* Zmiana kursora na wskaźnik */
+  }
+  
+  .custom-file-input:hover {
+  }
+  
+  .custom-file-input:focus {
+    outline: none; /* Usunięcie domyślnego efektu focus */
+    box-shadow: 0 0 5px #007bff; /* Efekt focus */
+  }
