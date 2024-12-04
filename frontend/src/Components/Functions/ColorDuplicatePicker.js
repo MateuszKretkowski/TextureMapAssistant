@@ -6,15 +6,8 @@ import "./gtb.css";
 export const ColorDuplicatePicker = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [textResponse, setTextResponse] = useState(null);
   const [imgData, setImgData] = useState(normalmapreworked);
-
-  const [data, setData] = useState({
-    width: 16,
-    height: 16,
-    mapWidth: 4,
-    mapHeight: 5,
-    objectsList: [], // Ensure this is updated with values before sending
-  });
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -23,7 +16,7 @@ export const ColorDuplicatePicker = () => {
     }
   };
 
-  const fetchZip = async () => {
+  const fetchResponse = async () => {
     if (!imgData) {
       setError("Please upload an image first.");
       return;
@@ -35,37 +28,24 @@ export const ColorDuplicatePicker = () => {
     try {
       const formData = new FormData();
       formData.append("texturePath", imgData);
-      formData.append("width", data.width);
-      formData.append("height", data.height);
-      formData.append("mapWidth", data.mapWidth);
-      formData.append("mapHeight", data.mapHeight);
-      data.objectsList.forEach((item) => {
-        formData.append("objectsList", item);
-      });
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/get_texture_bits/",
+        "http://127.0.0.1:8000/api/color_duplicate_picker/",
         {
           method: "POST",
           body: formData,
         }
       );
+      const textResponseee = await response.json();
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Unknown error occurred");
       }
 
-      // Pobieranie pliku ZIP
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "textures.zip";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+      setTextResponse(await textResponseee.message);
+      console.log(response, "response");
+      
     } catch (err) {
       setError(err.message);
     } finally {
@@ -78,17 +58,8 @@ export const ColorDuplicatePicker = () => {
       <div className="main_container gtb_container">
         <div className="sides-wrapper">
           <div className="left_side gtb_left_side">
-            <FileParameterFiller
-              data={data}
-              setData={setData}
-              stringArray={[
-                "width",
-                "height",
-                "mapWidth",
-                "mapHeight",
-                "objectsList",
-              ]}
-            />
+            <h1>Color Dupicate Picker</h1>
+            <h5>Do you have any problems with your Map?</h5>
           </div>
           <div className="right_side gtb_rigth_side">
             {imgData && (
@@ -120,10 +91,11 @@ export const ColorDuplicatePicker = () => {
           </div>
         </div>
         <div className="button-wrapper">
-          <button onClick={fetchZip} disabled={loading}>
+          <button onClick={fetchResponse} disabled={loading}>
             {loading ? "Loading..." : "Get Texture Bits"}
           </button>
         </div>
+        {textResponse && <p className="error">{textResponse}</p>}
         {error && <p className="error">Error: {error}</p>}
       </div>
     </div>

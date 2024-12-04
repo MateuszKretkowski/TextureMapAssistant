@@ -4,6 +4,64 @@ from PIL import Image
 import io
 import zipfile
 
+from django.http import JsonResponse
+from PIL import Image
+import io
+
+@csrf_exempt
+def color_duplicate_picker(request):
+    try:
+        # Sprawdzenie metody żądania
+        if request.method != "POST":
+            return JsonResponse({"error": "Invalid request method. Use POST."}, status=405)
+
+        # Pobranie pliku obrazu z request.FILES
+        texture_file = request.FILES.get("texturePath")
+        if not texture_file:
+            return JsonResponse({"error": "No texture file received."}, status=400)
+
+        # Wczytanie obrazu
+        try:
+            texture = Image.open(texture_file)
+        except Exception as e:
+            return JsonResponse({"error": f"Unable to open the image file. Error: {str(e)}"}, status=400)
+
+        colors = {}
+        duplicate_found = False
+
+        # Iteracja przez piksele obrazu
+        for pixelX in range(texture.width):
+            for pixelY in range(texture.height):
+                color = texture.getpixel((pixelX, pixelY))
+                if len(color) == 4:  # RGBA format
+                    r, g, b, a = color
+                    alpha = a
+                else:
+                    alpha = 255  # Default alpha for RGB images
+
+                # Sprawdzanie powtarzających się kolorów
+                if alpha > 0:  # Uwzględnienie tylko pikseli widocznych
+                    if color in colors:
+                        duplicate_found = True
+                        duplicate_info = {
+                            "color": color,
+                            "pixel_coordinates": (pixelX, pixelY),
+                            "duplicate_coordinates": colors[color]
+                        }
+                        return JsonResponse({
+                            "message": "Duplicate color found.",
+                            "details": duplicate_info
+                        })
+
+                    colors[color] = (pixelX, pixelY)
+
+        if not duplicate_found:
+            return JsonResponse({"message": "No duplicate colors found!"})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
 @csrf_exempt
 def get_texture_bits(request):
     try:

@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from textureMapAssistant.views import get_texture_bits
+from textureMapAssistant.views import get_texture_bits, color_duplicate_picker
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/get_texture_bits/', get_texture_bits, name='get_texture_bits'),
+    path('api/color_duplicate_picker/', color_duplicate_picker, name='color_duplicate_picker'),
 ]

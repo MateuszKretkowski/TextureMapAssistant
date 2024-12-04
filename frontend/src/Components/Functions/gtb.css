@@ -21,7 +21,7 @@
 .gtb_left_side {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
 .gtb_right_side {
