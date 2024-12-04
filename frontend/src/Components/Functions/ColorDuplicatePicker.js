@@ -110,7 +110,7 @@ export const ColorDuplicatePicker = () => {
             )}
           </div>
         </div>
-        <div className="button-wrapper">
+        <div className="button-wrapper button_margin">
           <button onClick={fetchResponse} disabled={loading}>
             {loading ? "Loading..." : "Check Color Duplicates"}
           </button>

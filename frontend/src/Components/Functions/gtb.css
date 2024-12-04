@@ -11,16 +11,16 @@
 
 .gtb_container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-direction: column !important;
     width: 50%;
     height: 50%;
 }
 
 .gtb_left_side {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: start;
     
 }

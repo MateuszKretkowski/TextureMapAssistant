@@ -34,7 +34,7 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
             <span>const data = &#123;</span>
             {stringArray?.map((key, index) => (
                 <pre className="fpf_pre" key={index}>
-                    {index !== stringArray.length - 1 && (
+                    {(stringArray.length > 3 && index !== stringArray.length - 1) | (stringArray.length < 3) && (
                         <>
                             {key}:{" "}
                             <input
@@ -44,7 +44,7 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
                             />
                         </>
                     )}
-                    {index === stringArray.length - 1 && (
+                    {index === stringArray.length - 1 && stringArray.length > 2 && (
                         <>
                             {key}:{"text"}
                             <button
@@ -57,7 +57,9 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
                     )}
                 </pre>
             ))}
-            <div className="objects-wrapper">
+            {stringArray.length > 3 && (
+
+                <div className="objects-wrapper">
                 {data.objectsList?.map((item, index) => (
                     <div key={index} className="object-item">
                         <input
@@ -71,7 +73,7 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
                                     return { ...prevData, objectsList: updatedObjects };
                                 });
                             }}
-                        />
+                            />
                         <button
                             className="small_btn"
                             onClick={() => {
@@ -80,12 +82,15 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
                                     objectsList: prevData.objectsList.filter((_, i) => i !== index),
                                 }));
                             }}
-                        >
+                            >
                             Remove
                         </button>
                     </div>
                 ))}
             </div>
+            )} {(
+                null
+            )}
             <div>
                 <span>&#125;</span>
                 {isToggled ? "_" : ""}

@@ -7,6 +7,69 @@ import zipfile
 from django.http import JsonResponse
 from PIL import Image
 import io
+import random
+
+@csrf_exempt
+def simple_color_paint(request):
+    try:
+        # Akceptowanie tylko metody POST
+        if request.method != "POST":
+            return JsonResponse({"error": "Invalid request method. Use POST."}, status=405)
+
+        # Pobranie pliku obrazu z request.FILES
+        texture_file = request.FILES.get("texturePath")
+        if not texture_file:
+            return JsonResponse({"error": "No texture file received."}, status=400)
+
+        # Pobranie szerokości i wysokości obrazu
+        try:
+            width = int(request.POST.get("width"))
+            height = int(request.POST.get("height"))
+        except (TypeError, ValueError):
+            return JsonResponse({"error": "Invalid width or height provided."}, status=400)
+
+        # Wczytanie obrazu z przesłanego pliku
+        try:
+            texture = Image.open(texture_file)
+        except Exception as e:
+            return JsonResponse({"error": f"Unable to open the image file. Error: {str(e)}"}, status=400)
+
+        # Tworzenie nowego obrazu o podanych wymiarach
+        image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+        image_pixels = image.load()
+        new_colors_list = []
+
+        # Przetwarzanie pikseli
+        for pixelX in range(texture.width):
+            for pixelY in range(texture.height):
+                color = texture.getpixel((pixelX, pixelY))
+                r, g, b, a = color
+                alpha = a
+                if alpha > 0:
+                    random_color = (
+                        random.randrange(0, 255),
+                        random.randrange(0, 255),
+                        random.randrange(0, 255),
+                        255,
+                    )
+                    if random_color in new_colors_list:
+                        print("There is a duplicate in the reworked Texture")
+                    else:
+                        image_pixels[pixelX, pixelY] = random_color
+                    new_colors_list.append(random_color)
+
+        # Zapisanie nowego obrazu w pamięci
+        output_buffer = io.BytesIO()
+        image.save(output_buffer, format="PNG")
+        output_buffer.seek(0)
+
+        # Przygotowanie odpowiedzi z nowym obrazem
+        response = HttpResponse(output_buffer, content_type="image/png")
+        response["Content-Disposition"] = 'attachment; filename="colormap.png"'
+        return response
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 @csrf_exempt
 def color_duplicate_picker(request):

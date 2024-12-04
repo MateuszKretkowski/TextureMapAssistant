@@ -5,6 +5,7 @@ import { Main } from "./Components/Main/Main";
 import { NavBar } from "./Components/NavBar/NavBar";
 import { GetTextureBits } from "./Components/Functions/GetTextureBits";
 import { ColorDuplicatePicker } from "./Components/Functions/ColorDuplicatePicker";
+import { SimpleColorPaint } from "./Components/Functions/SimpleColorPaint";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/items" element={<Items />} />
           <Route path="/get-texture-bits" element={<GetTextureBits />} />
           <Route path="/color-duplicate-picker" element={<ColorDuplicatePicker />} />
+          <Route path="/simple-color-paint" element={<SimpleColorPaint />} />
         </Routes>
     </Router>
   );

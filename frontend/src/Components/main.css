@@ -28,6 +28,10 @@ button {
     border-radius: 6px;
 }
 
+.button_margin {
+    margin-top: 10%;
+}
+
 button:hover {
     background-color: rgb(14, 13, 13);
     color: #fafafa;
@@ -91,6 +95,7 @@ input {
     justify-content: center;
     align-items: start;
     flex-direction: column;
+    margin: 5% 16%;
 }
 
 .fpf_pre {

@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileParameterFiller } from "../FileParametersFiller/FileParameterFiller";
 import normalmapreworked from "../images/normalmapreworked.png";
 import "./gtb.css";
 
-export const GetTextureBits = () => {
+export const SimpleColorPaint = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [textResponse, setTextResponse] = useState({
+    text: "",
+    details: "",
+  });
   const [imgData, setImgData] = useState(normalmapreworked);
 
   const [data, setData] = useState({
@@ -23,9 +27,18 @@ export const GetTextureBits = () => {
     }
   };
 
-  const fetchZip = async () => {
-    if (!imgData) {
+  useEffect(() => {
+    console.log(textResponse)
+  }, [textResponse])
+
+  const fetchResponse = async () => {
+    if (imgData == normalmapreworked || !imgData) {
       setError("Please upload an image first.");
+      return;
+    }
+
+    if (!data.width || !data.height) {
+      setError("Width and height are required.");
       return;
     }
 
@@ -37,35 +50,27 @@ export const GetTextureBits = () => {
       formData.append("texturePath", imgData);
       formData.append("width", data.width);
       formData.append("height", data.height);
-      formData.append("mapWidth", data.mapWidth);
-      formData.append("mapHeight", data.mapHeight);
-      data.objectsList.forEach((item) => {
-        formData.append("objectsList", item);
-      });
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/get_texture_bits/",
+        "http://127.0.0.1:8000/api/simple_color_paint/",
         {
           method: "POST",
           body: formData,
         }
       );
+      
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Unknown error occurred");
-      }
-
-      // Pobieranie pliku ZIP
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "textures.zip";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+    // Wyświetl lub pobierz obraz
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "colormap.png"; // Nazwa pliku
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+      
     } catch (err) {
       setError(err.message);
     } finally {
@@ -78,15 +83,12 @@ export const GetTextureBits = () => {
       <div className="main_container gtb_container">
         <div className="sides-wrapper">
           <div className="left_side gtb_left_side">
-            <FileParameterFiller
+          <FileParameterFiller
               data={data}
               setData={setData}
               stringArray={[
                 "width",
                 "height",
-                "mapWidth",
-                "mapHeight",
-                "objectsList",
               ]}
             />
           </div>
@@ -120,10 +122,12 @@ export const GetTextureBits = () => {
           </div>
         </div>
         <div className="button-wrapper button_margin">
-          <button onClick={fetchZip} disabled={loading}>
-            {loading ? "Loading..." : "Get Texture Bits"}
+          <button onClick={fetchResponse} disabled={loading}>
+            {loading ? "Loading..." : "Color"}
           </button>
         </div>
+        {textResponse.message != "" && <p className="error">{textResponse.text}</p>}
+        {textResponse.details != "" && <p className="error">{textResponse.details}</p>}
         {error && <p className="error">Error: {error}</p>}
       </div>
     </div>
