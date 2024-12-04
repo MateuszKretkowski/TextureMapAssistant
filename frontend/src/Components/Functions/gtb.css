@@ -20,8 +20,9 @@
 
 .gtb_left_side {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: start;
+    
 }
 
 .gtb_right_side {

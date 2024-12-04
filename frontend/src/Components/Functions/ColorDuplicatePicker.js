@@ -24,7 +24,7 @@ export const ColorDuplicatePicker = () => {
   }, [textResponse])
 
   const fetchResponse = async () => {
-    if (!imgData) {
+    if (imgData == normalmapreworked || !imgData) {
       setError("Please upload an image first.");
       return;
     }
@@ -68,8 +68,18 @@ export const ColorDuplicatePicker = () => {
       <div className="main_container gtb_container">
         <div className="sides-wrapper">
           <div className="left_side gtb_left_side">
-            <h1>Color Dupicate Picker</h1>
-            <h5>Do you have any problems with your Map?</h5>
+            <div>
+              <h1>Do you have any problems with your Map?</h1>
+              <h3>Let's check it right here. Input your image, and we will process this pixel-by-pixel, saving
+                your time, and not irritating you.
+              </h3>
+            </div>
+            <br />
+            <div>
+              <h3>
+                Btw, Did you know that frogs use their eyeballs to help them swallow? 🐸👀 When they eat, they pull their eyes down into their mouths to push food down their throats. So, next time you see a frog blinking while eating, it's actually multitasking! 😂
+              </h3>
+            </div>
           </div>
           <div className="right_side gtb_rigth_side">
             {imgData && (
@@ -102,7 +112,7 @@ export const ColorDuplicatePicker = () => {
         </div>
         <div className="button-wrapper">
           <button onClick={fetchResponse} disabled={loading}>
-            {loading ? "Loading..." : "Get Texture Bits"}
+            {loading ? "Loading..." : "Check Color Duplicates"}
           </button>
         </div>
         {textResponse.message != "" && <p className="error">{textResponse.text}</p>}
