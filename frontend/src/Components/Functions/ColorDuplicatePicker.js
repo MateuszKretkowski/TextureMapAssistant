@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileParameterFiller } from "../FileParametersFiller/FileParameterFiller";
 import normalmapreworked from "../images/normalmapreworked.png";
 import "./gtb.css";
@@ -6,7 +6,10 @@ import "./gtb.css";
 export const ColorDuplicatePicker = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [textResponse, setTextResponse] = useState(null);
+  const [textResponse, setTextResponse] = useState({
+    text: "",
+    details: "",
+  });
   const [imgData, setImgData] = useState(normalmapreworked);
 
   const handleImageChange = (event) => {
@@ -15,6 +18,10 @@ export const ColorDuplicatePicker = () => {
       setImgData(file);
     }
   };
+
+  useEffect(() => {
+    console.log(textResponse)
+  }, [textResponse])
 
   const fetchResponse = async () => {
     if (!imgData) {
@@ -43,7 +50,10 @@ export const ColorDuplicatePicker = () => {
         throw new Error(errorData.error || "Unknown error occurred");
       }
 
-      setTextResponse(await textResponseee.message);
+      setTextResponse({
+        text: await textResponseee.message,
+        details: await textResponseee.details,
+      });
       console.log(response, "response");
       
     } catch (err) {
@@ -95,7 +105,8 @@ export const ColorDuplicatePicker = () => {
             {loading ? "Loading..." : "Get Texture Bits"}
           </button>
         </div>
-        {textResponse && <p className="error">{textResponse}</p>}
+        {textResponse.message != "" && <p className="error">{textResponse.text}</p>}
+        {textResponse.details != "" && <p className="error">{textResponse.details}</p>}
         {error && <p className="error">Error: {error}</p>}
       </div>
     </div>
