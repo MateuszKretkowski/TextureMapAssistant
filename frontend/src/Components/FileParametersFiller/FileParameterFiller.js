@@ -34,7 +34,7 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
             <span>const data = &#123;</span>
             {stringArray?.map((key, index) => (
                 <pre className="fpf_pre" key={index}>
-                    {(stringArray.length > 3 && index !== stringArray.length - 1) | (stringArray.length < 3) && (
+                    {(stringArray.length > 4 && index !== stringArray.length - 1) | (stringArray.length < 4) && (
                         <>
                             {key}:{" "}
                             <input
@@ -44,7 +44,7 @@ export const FileParameterFiller = ({ data, setData, stringArray }) => {
                             />
                         </>
                     )}
-                    {index === stringArray.length - 1 && stringArray.length > 2 && (
+                    {index === stringArray.length - 1 && stringArray.length > 4 && (
                         <>
                             {key}:{"text"}
                             <button

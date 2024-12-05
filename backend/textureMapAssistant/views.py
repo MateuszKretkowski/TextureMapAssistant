@@ -10,6 +10,86 @@ import io
 import random
 
 @csrf_exempt
+def color_paint_with_shades(request):
+    try:
+        # Akceptowanie tylko metody POST
+        if request.method != "POST":
+            return JsonResponse({"error": "Invalid request method. Use POST."}, status=405)
+
+        # Pobranie pliku obrazu
+        texture_file = request.FILES.get("texturePath")
+        if not texture_file:
+            return JsonResponse({"error": "No texture file received."}, status=400)
+
+        # Pobranie szerokości, wysokości i blockSize
+        try:
+            width = int(request.POST.get("width"))
+            height = int(request.POST.get("height"))
+            blockSize = int(request.POST.get("blockSize"))
+        except (TypeError, ValueError):
+            return JsonResponse({"error": "Invalid width, height, or blockSize provided."}, status=400)
+
+        # Wczytanie obrazu z przesłanego pliku
+        try:
+            texture = Image.open(texture_file)
+        except Exception as e:
+            return JsonResponse({"error": f"Unable to open the image file. Error: {str(e)}"}, status=400)
+
+        # Tworzenie nowego obrazu o podanych wymiarach
+        image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+        image_pixels = image.load()
+
+        # Ustawienia kolorów
+        colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
+        current_color_index = 0
+        colors_list = []
+
+        # Przetwarzanie pikseli
+        for pixelX in range(texture.width):
+            for pixelY in range(texture.height):
+                color = texture.getpixel((pixelX, pixelY))
+                _, _, _, alpha = color
+
+                if alpha > 0:
+                    base_color = colors[current_color_index]
+
+                    random_shade = (
+                        base_color[0] + random.randint(-50, 50),
+                        base_color[1] + random.randint(-50, 50),
+                        base_color[2] + random.randint(-50, 50),
+                        255,
+                    )
+                    random_shade = tuple(max(0, min(255, c)) for c in random_shade)
+
+                    while random_shade in colors_list:
+                        random_shade = (
+                            base_color[0] + random.randint(-50, 50),
+                            base_color[1] + random.randint(-50, 50),
+                            base_color[2] + random.randint(-50, 50),
+                            255,
+                        )
+                        random_shade = tuple(max(0, min(255, c)) for c in random_shade)
+
+                    image_pixels[pixelX, pixelY] = random_shade
+                    colors_list.append(random_shade)
+
+                if (pixelX % blockSize == blockSize - 1) and (pixelY % blockSize == blockSize - 1):
+                    current_color_index = (current_color_index + 1) % len(colors)
+
+        # Zapisanie nowego obrazu w pamięci
+        output_buffer = io.BytesIO()
+        image.save(output_buffer, format="PNG")
+        output_buffer.seek(0)
+
+        # Przygotowanie odpowiedzi z nowym obrazem
+        response = HttpResponse(output_buffer, content_type="image/png")
+        response["Content-Disposition"] = 'attachment; filename="colormap_with_shades.png"'
+        return response
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@csrf_exempt
 def simple_color_paint(request):
     try:
         # Akceptowanie tylko metody POST
