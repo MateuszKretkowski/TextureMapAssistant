@@ -3,6 +3,7 @@ import { Main } from "./Main";
 import { Main_ColorDuplicatePicker } from "./Main_ColorDuplicatePicker";
 import { Main_GetTextureBits } from "./Main_GetTextureBits";
 import { Main_SimpleColorPaint } from "./Main_SimpleColorPaint";
+import { Main_ColorPaintWithShades } from "./Maint_ColorPaintWithShades";
 
 const MainPage = () => {
     return (
@@ -11,6 +12,7 @@ const MainPage = () => {
             <Main_ColorDuplicatePicker />
             <Main_GetTextureBits />
             <Main_SimpleColorPaint />
+            <Main_ColorPaintWithShades />
         </div>
     );
 };
