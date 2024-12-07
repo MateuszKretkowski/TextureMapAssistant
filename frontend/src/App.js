@@ -7,6 +7,8 @@ import { GetTextureBits } from "./Components/Functions/GetTextureBits";
 import { ColorDuplicatePicker } from "./Components/Functions/ColorDuplicatePicker";
 import { SimpleColorPaint } from "./Components/Functions/SimpleColorPaint";
 import { ColorPaintWithShades } from "./Components/Functions/ColorPaintWithShades";
+import { Main_ColorDuplicatePicker } from "./Components/Main/Main_ColorDuplicatePicker";
+import MainPage from "./Components/Main/MainPage";
 
 function App() {
 
@@ -16,7 +18,7 @@ function App() {
         <NavBar />
         <Routes>
           {/* Definiowanie tras */}
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/items" element={<Items />} />
           <Route path="/get-texture-bits" element={<GetTextureBits />} />
           <Route path="/color-duplicate-picker" element={<ColorDuplicatePicker />} />

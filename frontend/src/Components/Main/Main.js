@@ -6,7 +6,7 @@ import "./header.css"
 export const Main = () => {
     const nav = useNavigate();
     return (
-        <div className="Main">
+        <div className="Main main_small">
             <div className="main_container">
                 <div className="left_side">
                     <div className="titles-wrapper">
