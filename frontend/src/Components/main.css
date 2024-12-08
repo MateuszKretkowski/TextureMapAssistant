@@ -10,6 +10,19 @@
     padding: 0 0;
     
     transition: all 300ms ease;
+    animation: easein 800ms;
+
+}
+
+@keyframes easein {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 h1 {
@@ -115,7 +128,7 @@ input {
     content: "";
     position: absolute;
     top: 100%;
-    left: 38%;
+    left: 42%;
     width: auto;
     height: auto;
     font-size: 16px;
@@ -139,4 +152,57 @@ input {
 
 .input:hover:after {
     width: 100%;
+}
+
+/* --- Responsive Design --- */
+
+@media (max-width: 1200px) {
+    .fpf {
+        margin: 5% 10%;
+    }
+    button {
+        padding: 8px 12px;
+    }
+    h1 {
+    }
+}
+
+@media (max-width: 992px) {
+    .fpf {
+        margin: 5% 8%;
+    }
+    .input {
+    }
+    h1 {
+    }
+}
+
+@media (max-width: 768px) {
+    .fpf {
+        margin: 5% 5%;
+    }
+    button {
+        width: 100%;
+    }
+    h1 {
+        text-align: center;
+    }
+    .input {
+    }
+}
+
+@media (max-width: 576px) {
+    .fpf {
+        margin: 2% 3%;
+    }
+    button {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    h1 {
+        text-align: center;
+    }
+    .input {
+        font-size: 10px;
+    }
 }

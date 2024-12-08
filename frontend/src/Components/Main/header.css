@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     flex-direction: column;
 }
@@ -57,4 +57,124 @@
 }
 
 .titles-wrapper {
+}
+
+.gtb_image {
+    position: relative;
+    width: 60%; /* Domyślnie ustawiona na połowę szerokości rodzica */
+    max-width: 60%; /* Ograniczenie szerokości na maksymalnie połowę */
+    transition: all 300ms ease;
+}
+
+.gtb_image:hover {
+    filter: contrast(50%);
+}
+
+
+/* --- Responsive Design --- */
+
+@media (max-width: 1200px) {
+    .Main {
+        margin: 8rem 0;
+    }
+
+    .para {
+        text-align: center;
+    }
+
+    .main_container {
+        width: 80%;
+        gap: 4%;
+    }
+    .mapImage {
+        width: 60%;
+    }
+}
+
+@media (max-width: 992px) {
+    .Main {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+    .left_side, .right_side {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+    .main_container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+        gap: 3%;
+    }
+    .left_side, .right_side {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .mapImage {
+    }
+}
+
+@media (max-width: 768px) {
+    .Main {
+        padding: 10px;
+    }
+    .main_container {
+        width: 100%;
+        gap: 2%;
+    }
+    .left_side, .right_side {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    .mapImage {
+    }
+}
+
+@media (max-width: 576px) {
+    .Main {
+        padding: 5px;
+    }
+    .main_container {
+        gap: 1%;
+    }
+    .left_side, .right_side {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .mapImage {
+    }
+}
+
+@media (max-width: 1200px) {
+    .gtb_image {
+        width: 45%; /* Zmniejszenie szerokości */
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 992px) {
+    .gtb_image {
+        width: 60%; /* Ustawienie większej elastyczności */
+        max-width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .gtb_image {
+        width: 70%;
+        max-width: 70%;
+    }
+}
+
+@media (max-width: 576px) {
+    .gtb_image {
+        width: 80%;
+        max-width: 80%;
+    }
 }
