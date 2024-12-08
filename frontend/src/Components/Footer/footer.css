@@ -1,0 +1,136 @@
+.footer {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 5% 5%;
+}
+
+.footer_container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.footer_container:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: rgb(250,250,250);
+    background: linear-gradient(180deg, rgba(250,250,250,1) -10%, rgba(0,212,255,0) 100%);
+    pointer-events: none;
+}
+
+.footer_left_side {
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    flex-direction: column;
+    height: 100%;
+}
+
+.subName {
+    font-weight: 900;
+}
+
+.footer_right_side {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    height: 100%;
+}
+
+.footer_right_side:hover {
+    cursor: pointer;
+}
+
+.name {
+    transform: scale(1, 2);
+    display: inline-block;
+    font-weight: 500;
+    font-family: "Oswald";
+}
+/* --- Responsive Design --- */
+
+/* Dla ekranów poniżej 1200px */
+@media (max-width: 1200px) {
+    .footer {
+        padding: 5% 3%;
+    }
+    .footer_left_side {
+        align-items: start; /* Wyrównanie do lewej */
+    }
+    .subName {
+    }
+    .name {
+    }
+}
+
+/* Dla ekranów poniżej 992px */
+@media (max-width: 992px) {
+    .footer {
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+        padding: 5% 2%;
+    }
+    .footer_container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .footer_left_side {
+        align-items: center; /* Środkowanie w układzie kolumnowym */
+    }
+    .name {
+        font-size: 14px;
+        transform: scale(1, 1.5);
+    }
+}
+
+/* Dla ekranów poniżej 768px */
+@media (max-width: 768px) {
+    .footer {
+        padding: 10px 5px;
+    }
+    .footer_container {
+        gap: 5px;
+    }
+    .footer_left_side {
+        align-items: center;
+        gap: 3px; /* Zmniejszenie odstępu */
+    }
+    .subName {
+        font-size: 10px;
+    }
+    .name {
+        font-size: 12px;
+        transform: scale(1, 1.2);
+    }
+}
+
+/* Dla ekranów poniżej 576px */
+@media (max-width: 576px) {
+    .footer {
+        padding: 5px;
+    }
+    .footer_container {
+        gap: 5px;
+    }
+    .footer_left_side {
+        align-items: center;
+    }
+    .subName {
+        font-size: 8px;
+    }
+    .name {
+        font-size: 10px;
+        transform: scale(1, 1);
+    }
+}
