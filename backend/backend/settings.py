@@ -27,7 +27,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", default="fallback-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://darkorange-mole-748555.hostingersite.com/', 'www.https://darkorange-mole-748555.hostingersite.com/']
 
 
 # Application definition
@@ -83,6 +83,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+                'USER': 'użytkownik_bazy',
+        'PASSWORD': 'hasło_bazy',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -131,6 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
